@@ -14,25 +14,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JPanel;
 
-/*
- * TUGAS AKHIR GRAFIKA KOMPUTER
- */
 /**
- * Kelas Game merupakan kelas yang merepresentasikan permainan dari PacMan.
- * Dalam kelas ini, terdapat sebelas atribut utama. Atribut n menyatakan jumlah
- * kotak dalam board. Atribut tileLength menyatakan panjang kotak dalam board.
- * Atribut totalLength menyatakan panjang total board. Atribut start menyatakan
- * permaianan sudah dimulai atau belum. Atribut board menyatakan papan
- * permainan. Atribut pacMan menyatakan PacMan. Atribut ghosts menyatakan empat
- * hantu. Atribut score menyatakan skor yang telah didapatkan. Atribut
- * bigDotEaten menyatakan apakah big dot telah dimakan oleh PacMan. Atribut
- * defeated menyatakan PacMan sudah dikalahkan atau belum. Atribut won
- * menyatakan apakah permainan telah dimenangkan. Enam atribut lainnya merupakan
- * atribut yang digunakan untuk keperluan suara. Suara tersebut adalah suara
- * intro (suara awal permainan), waka (suara PacMan memakan dot), movingGhosts
- * (suara pergerakan hantu), scaredGhosts (suara hantu ketika PacMan memakan big
- * dot), die (suara ketika PacMan telah mati) dan win (suara ketika permainan
- * dimenangkan).
+ * Game
+ * A class which controls the game flow.
  *
  * @author williamo1099 (William Oktavianus | 2017730010)
  */
@@ -45,10 +29,17 @@ public class Game extends JPanel implements Runnable, KeyListener {
     private Ghost[] ghosts;
     private int score;
     private boolean bigDotEaten, defeated, won;
-    // atribut suara
+    
+    // Sound effect attributes
     private AudioInputStream introAudioInputStream, wakaAudioInputStream, movingGhostsAudioInputStream, scaredGhostsAudioInputStream, dieAudioInputStream, winAudioInputStream;
     private Clip intro, wakaWaka, movingGhosts, scaredGhosts, die, win;
 
+    /**
+     * The constructor for Game class.
+     * 
+     * @param n the board size
+     * @param tileLength the tile length
+     */
     public Game(int n, int tileLength) {
         this.addKeyListener(this);
         this.n = n;
@@ -58,16 +49,15 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Melakukan inisialisasi atribut-atribut dalam game PacMan (dipisahkan dari
-     * constructor dikarenakan pemain dimungkinkan untuk bermain game ulang
-     * setelah kalah atau menang)
+     * The method to initialize other attributes.
+     * Those attributes are initialized separately because players can repeat the game after winning or losing the game.
      */
     public void init() {
         this.board = new Board(this.n, this.tileLength);
         this.pacMan = new PacMan(this.n, this.tileLength, this.n - 1, 0);
-        this.board.setDotToFalse(this.n - 1, 0); // supaya ga bentrok ama PacMan
-        this.board.setBigDotToFalse(this.n - 1, 0); // supaya ga bentrok ama PacMan
-        this.board.setMazeToFalse(this.n - 1, 0); // supaya ga bentrok ama PacMan
+        this.board.setDotToFalse(this.n - 1, 0);
+        this.board.setBigDotToFalse(this.n - 1, 0);
+        this.board.setMazeToFalse(this.n - 1, 0);
         this.pacMan.setMaze(this.board.getMaze());
         this.ghosts = new Ghost[4];
         Color[] colors = new Color[]{new Color(44, 255, 254), new Color(254, 186, 253), new Color(253, 183, 91), new Color(252, 13, 27)};
@@ -84,32 +74,31 @@ public class Game extends JPanel implements Runnable, KeyListener {
         this.bigDotEaten = false;
         this.defeated = false;
         this.won = false;
-
-        // suara
+        
         try {
-            // suara intro
+            // Add the intro sound effect.
             this.introAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Intro.wav").getAbsoluteFile());
             this.intro = AudioSystem.getClip();
             this.intro.open(this.introAudioInputStream);
             this.intro.loop(Clip.LOOP_CONTINUOUSLY);
             this.intro.start();
 
-            // suara hantu
+            // Add the ghosts sound effect.
             this.movingGhostsAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Moving Ghosts.wav").getAbsoluteFile());
             this.movingGhosts = AudioSystem.getClip();
             this.movingGhosts.open(this.movingGhostsAudioInputStream);
 
-            // suara hantu (big dot dimakan)
+            // Add the ghosts sound effect while a big dot is eaten.
             this.scaredGhostsAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Scared Ghosts.wav").getAbsoluteFile());
             this.scaredGhosts = AudioSystem.getClip();
             this.scaredGhosts.open(this.scaredGhostsAudioInputStream);
 
-            // suara pacman mati
+            // Add the die sound effect.
             this.dieAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Die.wav").getAbsoluteFile());
             this.die = AudioSystem.getClip();
             this.die.open(this.dieAudioInputStream);
 
-            // suara menang
+            // Add the victory sound effect.
             this.winAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Victory.wav").getAbsoluteFile());
             this.win = AudioSystem.getClip();
             this.win.open(this.winAudioInputStream);
@@ -121,10 +110,9 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Mengecek apakah PacMan berhasil memakan big dot
+     * The method to check if Pac-Man successfully eats a big dot.
      *
-     * @return true jika PacMan berhasil memakan big dot atau false jika PacMan
-     * belum berhasil memakan big dot
+     * @return True if Pac-Man successfully eats a big dot or False jika Pac-Man does not eat a big dot.
      */
     private boolean bigDotEaten() {
         if (this.board.getBigDot()[this.pacMan.getX()][this.pacMan.getY()]) {
@@ -139,10 +127,9 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Mengecek apakah PacMan telah dimakan oleh hantu
+     * The method to check if Pac-Man has been eaten by a ghost.
      *
-     * @return true jika PacMan telah dimakan atau false jika PacMan belum
-     * dimakan
+     * @return True if Pac-Man has been eaten by a ghost or False if Pac-Man has not been eaten by a ghost.
      */
     private boolean defeated() {
         if (!this.bigDotEaten) {
@@ -159,10 +146,9 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Mengecek apakah PacMan telah berhasil memakan semua dot
+     * The method to check if Pac-Mas has successfully eaten all dots.
      *
-     * @return true jika PacMan berhasil memakan semua dot atau false jika
-     * PacMan belum berhasil memakan semua dot
+     * @return True if Pac-Man has successfully eaten all dots or False if Pac-Man has not eaten all dots.
      */
     private boolean won() {
         if (this.board.finished()) {
@@ -173,7 +159,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Mencetak layar intro dari game
+     * The method to print the game intro screen.
      *
      * @param g2d
      */
@@ -193,7 +179,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Mencetak score (skor terbaru) di layar
+     * The method to print current score on the screen.
      *
      * @param g2d
      */
@@ -205,8 +191,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Mencetak layar game over dan skor yang berhasil diraih saat PacMan telah
-     * dimakan oleh hantu (defeated == true)
+     * The method to print game over screen and current score.
      *
      * @param g2d
      */
@@ -230,8 +215,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Mencetak layar win saat PacMan berhasil memakan semua dot dalam board
-     * (won == true)
+     * The method to print victory screen.
      *
      * @param g2d
      */
@@ -255,7 +239,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Menggambar permainan PacMan
+     * The method to print the game.
      *
      * @param g
      */
@@ -266,70 +250,82 @@ public class Game extends JPanel implements Runnable, KeyListener {
         setBackground(Color.BLACK);
 
         if (this.start) {
-            // menggambar board (papan permainan)
+            // Draw the game board.
             this.board.draw(g2d);
-            // menggambar pacman dalam board
+            
+            // Draw Pac-Man on the board.
             this.pacMan.draw(g2d);
-            // menggambar hantu-hantu dalam board
+            
+            // Draw four ghosts on the board.
             for (Ghost ghost : this.ghosts) {
                 ghost.draw(g2d);
             }
 
-            // mencetak atribut score
+            // Print the current score.
             this.printScore(g2d);
 
             if (this.won) {
-                this.movingGhosts.stop(); // suara hantu bergerak berhenti
-                this.win.start(); // suara win dimulai
+                // Players have won the game.
+                // Stop the ghosts sound effect and start the victory sound effect.
+                this.movingGhosts.stop();
+                this.win.start();
                 this.printWin(g2d);
             } else if (this.defeated) {
-                this.movingGhosts.stop(); // suara hantu bergerak berhenti
-                this.die.start(); // suara die dimulai
+                // Players have lost the game.
+                // Stop the ghosts sound effect and start the die sound effect.
+                this.movingGhosts.stop();
+                this.die.start();
                 this.printGameOver(g2d);
             }
         } else {
-            // mencetak intro dari game
+            // Print the game intro screen.
             this.printIntro(g2d);
         }
     }
 
     /**
-     * Aktivitas yang dilakukan ketika thread dipanggil
+     * The method to run the game flow (when the thread is called).
      */
     @Override
     public void run() {
         while (!this.won && !this.defeated) {
-            // gerak hantu-hantu secara acak
+            // Move the ghosts randomly.
             for (int i = 0; i < 4; i++) {
                 this.ghosts[i].randomizedMove();
             }
 
-            this.bigDotEaten(); // mengecek apakah big dot telah dimakan
-            this.won(); // mengecek apakah permainan telah dimenangkan
-            this.defeated(); // mengecek apakah PacMan telah dikalahkan
+            // Check if a big dot has been eaten by Pac-Man.
+            this.bigDotEaten();
+            // Check if players have won the game.
+            this.won();
+            // Check if players have lost the game.
+            this.defeated();
 
-            // melihat apakah dot telah dimakan oleh PacMan (jika dimakan, score + 100 dan dot hilang)
+            // Check if a dot is eaten by Pac-Man.
+            // If a dot is eaten, current score + 100 and the dot will disappear.
             if (this.board.getDot()[this.pacMan.getX()][this.pacMan.getY()]) {
                 this.score += 100;
                 this.board.setDotToFalse(this.pacMan.getX(), this.pacMan.getY());
-                this.pacMan.setEating(true); // biar mulut PacMan bisa gerak
+                this.pacMan.setEating(true);
             }
 
-            // melihat apakah big dot telah dimakan oleh PacMan (jika dimakan, score + 100, hantu berubah menjadi biru dan big dot hilang)
+            // Check if a big dot is eaten by Pac-Man.
+            // If a big dot is eaten, current socre + 200, all ghosts will become blue and the big dot will disappear.
             if (this.board.getBigDot()[this.pacMan.getX()][this.pacMan.getY()]) {
                 this.score += 200;
                 this.board.setBigDotToFalse(this.pacMan.getX(), this.pacMan.getY());
-                this.pacMan.setEating(true); // biar mulut PacMan bisa gerak
+                this.pacMan.setEating(true);
             }
 
-            // melihat apakah hantu biru berhasil dimakan oleh PacMan (jika dimakan, score + 500 dan hantu hilang sementara)
+            // Check if one of the blue ghosts is eaten by Pac-Man.
+            // If a blue ghost is eaten, current socre + 500 and the ghost will disappear temporarily.
             for (int i = 0; i < 4; i++) {
                 if (this.ghosts[i].isBigDotEaten()) {
                     if (this.ghosts[i].getX() == this.pacMan.getX()
                             && this.ghosts[i].getY() == this.pacMan.getY()) {
                         this.score += 500;
                         this.ghosts[i].setEaten(true);
-                        this.pacMan.setEating(true); // biar mulut PacMan bisa gerak
+                        this.pacMan.setEating(true);
                     }
                 } else {
                     this.bigDotEaten = false;
@@ -345,23 +341,23 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 
     /**
-     * Mengatur kegiatan yang dilakukan ketika suatu key yang ditekan
+     * The method to handle key event.
      *
      * @param e
      */
     @Override
     public void keyPressed(KeyEvent e) {
-        // System.out.println(e);
         if (this.start) {
             if (this.won || this.defeated) {
-                // kalau udh menang atau kalah
-                if (e.getKeyCode() == 32) { // menekan key space
+                if (e.getKeyCode() == 32) {
+                    // If the players press the space key.
                     this.init();
                     this.intro.stop();
                     this.movingGhosts.loop(Clip.LOOP_CONTINUOUSLY);
                     repaint();
-                } else if (e.getKeyCode() == 27) { // menekan esc
-                    System.exit(1); // keluar dari aplikasi
+                } else if (e.getKeyCode() == 27) {
+                    // If the players press the ESC key.
+                    System.exit(1);
                 }
             } else {
                 try {
@@ -370,29 +366,32 @@ public class Game extends JPanel implements Runnable, KeyListener {
                     this.wakaWaka.open(this.wakaAudioInputStream);
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
                 }
-
-                // menekan key kanan (→)
+                
+                // If the players press right arrow key (→).
                 if (e.getKeyCode() == 39) {
                     this.pacMan.move(1);
                     if (this.board.getDot()[this.pacMan.getX()][this.pacMan.getY()]) {
                         this.wakaWaka.start();
                     }
                 }
-                // menekan key kiri (←)
+                
+                // If the players press left arrow key (←).
                 if (e.getKeyCode() == 37) {
                     this.pacMan.move(3);
                     if (this.board.getDot()[this.pacMan.getX()][this.pacMan.getY()]) {
                         this.wakaWaka.start();
                     }
                 }
-                // menekan key atas (↑)
+                
+                // If the players press up arrow key (↑).
                 if (e.getKeyCode() == 38) {
                     this.pacMan.move(0);
                     if (this.board.getDot()[this.pacMan.getX()][this.pacMan.getY()]) {
                         this.wakaWaka.start();
                     }
                 }
-                // menekan key bawah (↓)
+                
+                // If the players press down arrow key (↓).
                 if (e.getKeyCode() == 40) {
                     this.pacMan.move(2);
                     if (this.board.getDot()[this.pacMan.getX()][this.pacMan.getY()]) {
@@ -401,12 +400,14 @@ public class Game extends JPanel implements Runnable, KeyListener {
                 }
             }
         } else {
-            if (e.getKeyCode() == 32) { // menekan key space
+            if (e.getKeyCode() == 32) {
+                // If the players press the space key.
                 this.start = true;
                 this.intro.stop();
                 this.movingGhosts.loop(Clip.LOOP_CONTINUOUSLY);
-            } else if (e.getKeyCode() == 27) { // menekan esc
-                System.exit(1); // keluar dari aplikasi
+            } else if (e.getKeyCode() == 27) {
+                // If the players press the ESC key.
+                System.exit(1);
             }
         }
     }

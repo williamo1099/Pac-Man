@@ -2,19 +2,17 @@
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
-/*
- * TTUGAS AKHIR GRAFIKA KOMPUTER
- */
 /**
- * Kelas Tester merupakan kelas yang digunakan untuk uji coba.
+ * Tester
+ * The main class to run the game.
  *
- * @author williamo1099 (William Oktavianus | 2017730010)
+ * @author William Oktavianus (williamo1099)
  */
 public class Tester {
 
     public static void main(String[] args) {
-        JFrame f = new JFrame("PacMan");
-        Game board = new Game(11, 50); // saat ini dibuat fix 11x11 dulu (masalah maze)
+        JFrame f = new JFrame("Pac-Man");
+        Game board = new Game(11, 50); // Currently, board size is fixed 11x11.
         board.setFocusable(true);
         f.getContentPane().add("Center", board);
         f.pack();
