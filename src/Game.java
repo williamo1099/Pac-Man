@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 /**
  * Game
- * A class which controls the game flow.
+ * The class to control the game flow.
  *
  * @author williamo1099 (William Oktavianus | 2017730010)
  */
