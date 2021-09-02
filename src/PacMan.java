@@ -7,21 +7,11 @@ import java.awt.geom.Arc2D;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
-/*
- * TUGAS AKHIR GRAFIKA KOMPUTER
- */
 /**
- * Kelas PacMan merupakan kelas yang merepresentasikan PacMan dalam permainan.
- * Dalam kelas ini, terdapat tiga atribut utama. Atribut x menyatakan posisi
- * koordinat x dari PacMan. Atribut y menyatakan posisi koordinat y dari PacMan.
- * Atribut direction menyatakan kode arah dari gerakan PacMan (kiri, atas, kanan
- * atau bawah). Atribut eating menyatakan apakah PacMan sedang dalam kondisi
- * memakan. Atribut defeated menyatakan apakah PacMan telah dimakan oleh hantu.
- * Atribut maze menyatakan posisi dinding dalam papan permainan. Tiga atribut
- * lainnya adalah n (jumlah kotak dalam papan), tileLength (panjang kotak) dan
- * totalLength (panjang total papan).
+ * PacMan
+ * The class which represents the Pac-Man.
  *
- * @author williamo1099 (William Oktavianus | 2017730010)
+ * @author William Oktavianus (williamo1099)
  */
 public class PacMan {
 
@@ -30,108 +20,118 @@ public class PacMan {
     protected boolean eating, defeated;
     protected boolean[][] maze;
 
+    /**
+     * The constructor for PacMan class.
+     * 
+     * @param n the board size
+     * @param tileLength the tile length
+     * @param x x position coordinate
+     * @param y y position coordinate
+     */
     public PacMan(int n, int tileLength, int x, int y) {
         this.n = n;
         this.tileLength = tileLength;
         this.totalLength = this.n * this.tileLength;
         this.x = x;
         this.y = y;
-        this.direction = 3; // kiri (default)
+        this.direction = 3; // Set left as the default direction.
         this.eating = false;
         this.defeated = false;
     }
 
     /**
-     * Mendapatkan posisi koordinat x
+     * The method to get x position coordinate.
      *
-     * @return posisi koordinat x
+     * @return x position coordinate
      */
     public int getX() {
         return x;
     }
 
     /**
-     * Mengubah atribut x dengan input x
+     * The method to set the x position coordinate.
      *
-     * @param x posisi koordinat x
+     * @param x x position coordinate
      */
     public void setX(int x) {
         this.x = x;
     }
 
     /**
-     * Mendapatkan posisi koordinat y
+     * The method to get y position coordinate.
      *
-     * @return posisi koordinat y
+     * @return y position coordinate
      */
     public int getY() {
         return y;
     }
 
     /**
-     * Mengubah atribut y dengan input y
+     * The method to set the y position coordinate.
      *
-     * @param y posisi koordinat y
+     * @param y y position coordinate
      */
     public void setY(int y) {
         this.y = y;
     }
 
     /**
-     * Mendapatkan arah dari PacMan
+     * The method to get the facing direction.
+     * 0 is up, 1 is right, 2 is down and 3 is left.
      *
-     * @return kode arah (0: kiri, 1: atas, 2: kanan, 3: bawah)
+     * @return facing direction
      */
     public int getDirection() {
         return direction;
     }
 
     /**
-     * Mengubah atribut direction dengan input direction
+     * The method to set the facing direction.
+     * 0 is up, 1 is right, 2 is down and 3 is left.
      *
-     * @param direction kode arah (0: kiri, 1: atas, 2: kanan, 3: bawah)
+     * @param direction facing direction
      */
     public void setDirection(int direction) {
         this.direction = direction;
     }
 
     /**
-     * Mengubah atribut eating dengan input eating
+     * The method to set the eating status.
+     * The status is True if Pac-Man is eating a dot or a big dot or False if Pac-Man is not eating.
      *
-     * @param eating true jika PacMan sedang makan atau false jika PacMan tidak
-     * sedang makan
+     * @param eating eating status
      */
     public void setEating(boolean eating) {
         this.eating = eating;
     }
 
     /**
-     * Mengubah atribut defeated dengan input defeated
-     *
-     * @param defeated true jika PacMan telah dimakan oleh hantu atau false jika
-     * PacMan belum dimakan oleh hantu
+     * The method to set the defeated status.
+     * The status is True if Pac-Man has been eaten by a ghost or False if Pac-Man has not been eaten by a ghost.
+     * 
+     * @param defeated defeated status
      */
     public void setDefeated(boolean defeated) {
         this.defeated = defeated;
     }
 
     /**
-     * Mengubah atribut maze dengan input maze
+     * The method to set the maze.
      *
-     * @param maze posisi dinding dalam papan permainan
+     * @param maze
      */
     public void setMaze(boolean[][] maze) {
         this.maze = maze;
     }
 
     /**
-     * Menggambar bentuk PacMan (warna kuning)
+     * The method to draw Pac-Man.
      *
      * @param g2d
-     * @param x posisi koordinat x dari PacMan dalam board
-     * @param y posisi koordinat y dari PacMan dalam board
-     * @param width lebar dari PacMan
-     * @param height tinggi dari PacMan
+     * @param x x position coordinate
+     * @param y y position coordinate
+     * @param width width of Pac-Man
+     * @param height height of Pac-Man
      */
     private void drawPacMan(Graphics2D g2d, int x, int y, int width, int height) {
         g2d.setColor(new Color(255, 253, 56));
@@ -144,19 +144,19 @@ public class PacMan {
         transform.translate(xc, yc);
         switch (this.direction) {
             case 0:
-                // atas
+                // If the facing direction is up.
                 transform.rotate(Math.toRadians(90));
                 break;
             case 1:
-                // kanan
+                // If the facing direction is right.
                 transform.rotate(Math.toRadians(170));
                 break;
             case 2:
-                // bawah
+                // If the facing direction is down.
                 transform.rotate(Math.toRadians(-100));
                 break;
             default:
-                // kiri
+                // If the facing direction is left.
                 transform.rotate(Math.toRadians(0));
                 break;
         }
@@ -166,13 +166,13 @@ public class PacMan {
     }
 
     /**
-     * Menggambar bentuk PacMan (warna kuning) saat sedang memakan
+     * The method to draw eating Pac-Man.
      *
      * @param g2d
-     * @param x posisi koordinat x dari PacMan dalam board
-     * @param y posisi koordinat y dari PacMan dalam board
-     * @param width lebar dari PacMan
-     * @param height tinggi dari PacMan
+     * @param x x position coordinate
+     * @param y y position coordinate
+     * @param width width of Pac-Man
+     * @param height height of Pac-Man
      */
     private void drawPacManEating(Graphics2D g2d, int x, int y, int width, int height) {
         g2d.setColor(new Color(255, 253, 56));
@@ -181,13 +181,13 @@ public class PacMan {
     }
 
     /**
-     * Menghilangkan PacMan (mengubah warna PacMan menjadi hitam)
+     * The method to remove Pac-Man.
      *
      * @param g2d
-     * @param x posisi koordinat x dari PacMan dalam board
-     * @param y posisi koordinat y dari PacMan dalam board
-     * @param width lebar dari PacMan
-     * @param height tinggi dari PacMan
+     * @param x x position coordinate
+     * @param y y position coordinate
+     * @param width width of Pac-Man
+     * @param height height of Pac-Man
      */
     private void removePacMan(Graphics2D g2d, int x, int y, int width, int height) {
         g2d.setColor(Color.BLACK);
@@ -196,33 +196,36 @@ public class PacMan {
     }
 
     /**
-     * Menggambar PacMan
+     * The method to draw Pac-Man on the board.
      *
      * @param g2d
      */
     protected void draw(Graphics2D g2d) {
-        if (!this.defeated) { // kalau belum kalah
-            if (this.eating) { // kalau lagi makan
+        if (!this.defeated) {
+            // If the players have not lost the game.
+            if (this.eating) {
+                // If Pac-Man is eating a dot or a big dot.
                 this.drawPacManEating(g2d, (this.x * this.tileLength) + this.tileLength / 4,
                         (this.y * this.tileLength) + this.tileLength / 4,
                         this.tileLength / 2,
                         this.tileLength / 2);
-
-                // timer selama 10 ms supaya mulut PacMan terkesan bergerak saat memakan
+                
+                // Set a timer for 10ms to make Pac-Man visibly eating.
                 new java.util.Timer().schedule(new java.util.TimerTask() {
                     @Override
                     public void run() {
                         setEating(false);
                     }
                 }, 10);
-            } else { // kalau lagi ga makan
+            } else {
+                // If Pac-Man is not eating a dot or a big dot.
                 this.drawPacMan(g2d, (this.x * this.tileLength) + this.tileLength / 4,
                         (this.y * this.tileLength) + this.tileLength / 4,
                         this.tileLength / 2,
                         this.tileLength / 2);
             }
-        } else { // kalau udah kalah
-            // sembunyi PacMan
+        } else {
+            // If the players have lost the game, hide Pac-Man.
             this.removePacMan(g2d, (this.x * this.tileLength) + this.tileLength / 4,
                     (this.y * this.tileLength) + this.tileLength / 4,
                     this.tileLength / 2,
@@ -231,35 +234,36 @@ public class PacMan {
     }
 
     /**
-     * Melakukan pergerakan sesuai direction
+     * The method to move Pac-Man.
+     * 0 is up, 1 is right, 2 is down and 3 is left.
      *
-     * @param direction kode arah gerak
+     * @param direction moving direction
      */
     protected void move(int direction) {
         switch (direction) {
             case 0:
-                // atas
+                // Move up.
                 if (this.y > 0 && !this.maze[this.x][this.y - 1]) {
                     this.y = this.y - 1;
                     this.direction = 0;
                 }
                 break;
             case 1:
-                // kanan
+                // Move right.
                 if (this.x < this.n - 1 && !this.maze[this.x + 1][this.y]) {
                     this.x = this.x + 1;
                     this.direction = 1;
                 }
                 break;
             case 2:
-                // bawah
+                // Move down.
                 if (this.y < this.n - 1 && !this.maze[this.x][this.y + 1]) {
                     this.y = this.y + 1;
                     this.direction = 2;
                 }
                 break;
             default:
-                // kiri
+                // Move left.
                 if (this.x > 0 && !this.maze[this.x - 1][this.y]) {
                     this.x = this.x - 1;
                     this.direction = 3;
