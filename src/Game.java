@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  * Game
  * The class to control the game flow.
  *
- * @author williamo1099 (William Oktavianus | 2017730010)
+ * @author William Oktavianus (williamo1099)
  */
 public class Game extends JPanel implements Runnable, KeyListener {
 

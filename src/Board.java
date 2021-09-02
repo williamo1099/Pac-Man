@@ -6,25 +6,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-/*
- * TUGAS AKHIR GRAFIKA KOMPUTER
- */
 /**
- * Kelas board merupakan kelas yang merepresentasikan papan permainan dalam
- * permainan. Dalam kelas ini, terdapat lima atribut. Atribut n menyatakan
- * jumlah kotak dalam board. Atribut tileLength menyatakan panjang kotak dalam
- * board. Atribut totalLength menyatakan panjang total dari board. Atribut dot
- * menyatakan posisi dot dalam papan permainan. Atribut big dot menyatakan
- * posisi big dot dalam papan permainan. Atribut maze menyatakan posisi dinding
- * dalam papan permainan.
+ * Board
+ * The class which represents the game board.
  *
- * @author williamo1099 (William Oktavianus | 2017730010)
+ * @author William Oktavianus (williamo1099)
  */
 public class Board {
 
     private final int n, tileLength, totalLength;
     private boolean[][] dot, bigDot, maze;
 
+    /**
+     * The constructor for Board class.
+     * 
+     * @param n the board size
+     * @param tileLength  the tile length
+     */
     public Board(int n, int tileLength) {
         this.n = n;
         this.tileLength = tileLength;
@@ -77,7 +75,7 @@ public class Board {
     }
 
     /**
-     * Mendapatkan posisi dot dalam permainan
+     * The method to get a dot on the board.
      *
      * @return dot
      */
@@ -86,51 +84,58 @@ public class Board {
     }
 
     /**
-     *
-     * @return
+     * The method to get the maze.
+     * 
+     * @return maze
      */
     public boolean[][] getMaze() {
         return maze;
     }
+    
+    /**
+     * The method to remove a wall in the maze.
+     * 
+     * @param i index position i
+     * @param j index position j 
+     */
+    public void setMazeToFalse(int i, int j) {
+        this.maze[i][j] = false;
+    }
 
     /**
-     * Mengubah atribut dot[i][j] menjadi false
+     * The method to remove a dot.
      *
-     * @param i posisi indeks i
-     * @param j posisi indeks j
+     * @param i index position i
+     * @param j index position j
      */
     public void setDotToFalse(int i, int j) {
         this.dot[i][j] = false;
     }
 
     /**
-     * Mendapatkan posisi dot dalam permainan
+     * The method to get a big dot.
      *
-     * @return dot
+     * @return bigDot
      */
     public boolean[][] getBigDot() {
         return bigDot;
     }
 
     /**
-     * Mengubah atribut dot[i][j] menjadi false
+     * The method to remove a big dot.
      *
-     * @param i posisi indeks i
-     * @param j posisi indeks j
+     * @param i index position i
+     * @param j index position j
      */
     public void setBigDotToFalse(int i, int j) {
         this.bigDot[i][j] = false;
     }
 
-    public void setMazeToFalse(int i, int j) {
-        this.maze[i][j] = false;
-    }
-
     /**
-     * Menggambar garis batas dalam board
+     * The method to draw border on the board.
      *
      * @param g2d
-     * @param i posisi indeks i
+     * @param i index position i
      */
     private void drawBorder(Graphics2D g2d, int i) {
         g2d.setColor(Color.BLUE);
@@ -140,11 +145,11 @@ public class Board {
     }
 
     /**
-     * Menggambar dot dalam board
+     * The method to draw a dot on the board.
      *
      * @param g2d
-     * @param i posisi indeks i
-     * @param j posisi indeks j
+     * @param i index position i
+     * @param j index position j
      */
     private void drawDot(Graphics2D g2d, int i, int j) {
         g2d.setColor(Color.WHITE);
@@ -155,11 +160,11 @@ public class Board {
     }
 
     /**
-     * Menggambar big dot dalam board
+     * The method to draw a big dot on the board.
      *
      * @param g2d
-     * @param i posisi indeks i
-     * @param j posisi indeks j
+     * @param i index position i
+     * @param j index position j
      */
     private void drawBigDot(Graphics2D g2d, int i, int j) {
         g2d.setColor(Color.WHITE);
@@ -170,11 +175,11 @@ public class Board {
     }
 
     /**
-     * Menggambarkan dinding dalam board
+     * The method to draw a wall on the board.
      * 
      * @param g2d
-     * @param i posisi indeks i
-     * @param j posisi indeks j
+     * @param i index position i
+     * @param j index position j
      */
     private void drawMaze(Graphics2D g2d, int i, int j) {
         g2d.setColor(new Color(65, 84, 179));
@@ -182,17 +187,17 @@ public class Board {
     }
 
     /**
-     * Menggambar board secara keseluruhan
+     * The method to draw the board.
      *
      * @param g2d
      */
     protected void draw(Graphics2D g2d) {
-        // menggambarkan border
+        // Draw the borders.
         for (int i = 0; i < this.n; i++) {
             this.drawBorder(g2d, i);
         }
 
-        // menggambarkan dot
+        // Draw the dots.
         for (int i = 0; i < this.n; i++) {
             for (int j = 0; j < this.n; j++) {
                 if (this.dot[i][j]) {
@@ -201,7 +206,7 @@ public class Board {
             }
         }
 
-        // menggambarkan big dot
+        // Draw the big dots.
         for (int i = 0; i < this.n; i++) {
             for (int j = 0; j < this.n; j++) {
                 if (this.bigDot[i][j]) {
@@ -210,7 +215,7 @@ public class Board {
             }
         }
 
-        // menggambarkan dinding
+        // Draw the walls.
         for (int i = 0; i < this.n; i++) {
             for (int j = 0; j < this.n; j++) {
                 if (this.maze[i][j]) {
@@ -221,11 +226,9 @@ public class Board {
     }
 
     /**
-     * Mengecek apakah permainan telah selesai (ketika semua dot telah
-     * dikunjungi oleh PacMan)
+     * The method to check if all dots have been eaten by Pac-Man.
      *
-     * @return true jika permainan telah selesai atau false jika permainan belum
-     * selesai
+     * @return True if all dots have been eaten by Pac-Man or False if Pac-Man has not eaten all dots.
      */
     protected boolean finished() {
         for (int i = 0; i < n; i++) {
