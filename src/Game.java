@@ -88,29 +88,29 @@ public class Game extends JPanel implements Runnable, KeyListener {
         // suara
         try {
             // suara intro
-            this.introAudioInputStream = AudioSystem.getAudioInputStream(new File("Pacman- Intro.wav").getAbsoluteFile());
+            this.introAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Intro.wav").getAbsoluteFile());
             this.intro = AudioSystem.getClip();
             this.intro.open(this.introAudioInputStream);
             this.intro.loop(Clip.LOOP_CONTINUOUSLY);
             this.intro.start();
 
             // suara hantu
-            this.movingGhostsAudioInputStream = AudioSystem.getAudioInputStream(new File("Pacman- Moving Ghosts.wav").getAbsoluteFile());
+            this.movingGhostsAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Moving Ghosts.wav").getAbsoluteFile());
             this.movingGhosts = AudioSystem.getClip();
             this.movingGhosts.open(this.movingGhostsAudioInputStream);
 
             // suara hantu (big dot dimakan)
-            this.scaredGhostsAudioInputStream = AudioSystem.getAudioInputStream(new File("Pacman- Scared Ghosts.wav").getAbsoluteFile());
+            this.scaredGhostsAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Scared Ghosts.wav").getAbsoluteFile());
             this.scaredGhosts = AudioSystem.getClip();
             this.scaredGhosts.open(this.scaredGhostsAudioInputStream);
 
             // suara pacman mati
-            this.dieAudioInputStream = AudioSystem.getAudioInputStream(new File("Pacman- Die.wav").getAbsoluteFile());
+            this.dieAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Die.wav").getAbsoluteFile());
             this.die = AudioSystem.getClip();
             this.die.open(this.dieAudioInputStream);
 
             // suara menang
-            this.winAudioInputStream = AudioSystem.getAudioInputStream(new File("Pacman- Victory.wav").getAbsoluteFile());
+            this.winAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Victory.wav").getAbsoluteFile());
             this.win = AudioSystem.getClip();
             this.win.open(this.winAudioInputStream);
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
@@ -365,7 +365,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
                 }
             } else {
                 try {
-                    this.wakaAudioInputStream = AudioSystem.getAudioInputStream(new File("Pacman- Waka Waka.wav").getAbsoluteFile());
+                    this.wakaAudioInputStream = AudioSystem.getAudioInputStream(new File("resources/sound/Waka Waka.wav").getAbsoluteFile());
                     this.wakaWaka = AudioSystem.getClip();
                     this.wakaWaka.open(this.wakaAudioInputStream);
                 } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {

@@ -57,7 +57,7 @@ public class Board {
 
         this.maze = new boolean[this.n][this.n];
         try {
-            File file = new File("maze_1 (11 x 11).txt");
+            File file = new File("resources/maze.txt");
             Scanner sc = new Scanner(file);
             for (int i = 0; i < this.n; i++) {
                 char[] row = sc.nextLine().toCharArray();
