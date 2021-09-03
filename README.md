@@ -8,7 +8,7 @@ A simple Pac-Man desktop game built in Java. Players play as Pac-Man and the mai
 
 ## Gameplay
 
-Gameplay of this game quite resembles gameplay of the original Pac-Man. As mentioned above, players play as Pac-Man and the main objective of this game is to eat all the dots on the board. To accomplish the objective, Pac-Man can move left, right, up and down inside the maze (by using arrow keys). While eating all dots, Pac-Man must avoid four ghosts which will move randomly. If a ghost eats Pac-Man, players lose the game.
+Gameplay of this game quite resembles gameplay of the original Pac-Man. As mentioned above, players play as Pac-Man and the main objective of this game is to eat all the dots on the board. To accomplish the objective, Pac-Man can move left, right, up and down inside the maze (by using arrow keys). While eating all dots, Pac-Man must avoid four ghosts (Blinky, Pinky, Inky and Clyde) which will move randomly. If a ghost eats Pac-Man, players lose the game.
 
 On the board, Pac-Man can eat dots or big dots. If Pac-Man eats a dot, players will gain 100 score. If Pac-Man eats a big dot, players will gain 200 score. In addition, all ghosts on the board will turn blue and become eatable by Pac-Man for 5 seconds. If Pac-Man eats a blue ghost, players will gain 500 score.
 
