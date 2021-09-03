@@ -1,6 +1,6 @@
 # Pac-Man
 
-A simple Pac-Man desktop game built in Java. Players play as Pac-Man and the main objective of the game is to eat all dots on the board.
+A simple [Pac-Man](https://en.wikipedia.org/wiki/Pac-Man) desktop game built in Java. Players play as Pac-Man and the main objective of the game is to eat all dots on the board.
 
 <p align="center">
     <img alt="Game Demo" width="300" height="300" src="images/Game%20Demo.gif">
