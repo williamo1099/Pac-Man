@@ -1,14 +1,26 @@
 # Pac-Man
 
+A simple Pac-Man desktop game built in Java. Players play as Pac-Man and the main objective of the game is to eat all dots on the board.
+
 <p align="center">
-    <img src='images/Game%20Screenshot.png' alt='Screenshot' width='300' height='300'>
+    <img alt="Game Demo" width="300" height="300" src="images/Game%20Demo.gif">
 </p>
 
-A simple Pac-Man game built on Java. Players play as Pac-Man and the goal is to eat all dots on the board. There are also four ghosts (Blinky, Pinky, Inky and Clyde) which will move randomly and are able to eat Pac-Man. If one of the ghosts eats Pac-Man before Pac-Man successfully eat all dots, players lose the game. If Pac-Man successfully eat all dots without being eaten by one of the ghosts, players win the game.
+## Gameplay
 
-There are also several big dots. If Pac-Man eats one of those big dot, all ghosts will not be able to eat Pac-Man and vice versa, Pac-Man will be able to eat the ghosts. This condition only lasts for five seconds.
+Gameplay of this game quite resembles gameplay of the original Pac-Man. As mentioned above, players play as Pac-Man and the main objective of this game is to eat all the dots on the board. To accomplish the objective, Pac-Man can move left, right, up and down inside the maze (by using arrow keys). While eating all dots, Pac-Man must avoid four ghosts which will move randomly. If a ghost eats Pac-Man, players lose the game.
 
-Pac-Man can move left, right, up and down inside a maze by using arrow keys. Pac-Man cannot pass through the wall. In addition, players can customize the maze by editing `maze.txt` in `resources`. In `maze.txt`, `x` means empty space which Pac-Man can pass through and `@` means wall which Pac-Man cannot pass through. Size of the maze is currently fixed (11x11). You can edit the size manually in `Tester.java`.
+On the board, Pac-Man can eat dots or big dots. If Pac-Man eats a dot, players will gain 100 score. If Pac-Man eats a big dot, players will gain 200 score. In addition, all ghosts on the board will turn blue and become eatable by Pac-Man for 5 seconds. If Pac-Man eats a blue ghost, players will gain 500 score.
+
+## How to Run
+
+1. Install [NetBeans IDE](https://www.oracle.com/tools/technologies/netbeans-ide.html).
+2. Clone the repository.
+3. Open the repository as a project in NetBeans IDE.
+4. Run `Tester.java`.
+5. Input the `n` (board size) and `tile length`.
+
+Players can customize the maze by editing `maze.txt` in `resources`. In `maze.txt`, `x` means empty space which Pac-Man can pass through and `@` means wall which Pac-Man cannot pass through. Make sure that size of the maze in `maze.txt` matches the input `n`.
 
 ## Lincense
 
